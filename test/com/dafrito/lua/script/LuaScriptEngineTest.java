@@ -50,8 +50,21 @@ public class LuaScriptEngineTest {
 	}
 
 	@Test
-	public void testScriptEngineHasNoGlobalBindings() throws Exception {
-		assertNull(factory.getScriptEngine().getBindings(ScriptContext.GLOBAL_SCOPE));
+	public void testScriptEngineHasGlobalAndEngineBindings() throws Exception {
+		assertNotNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
+		assertNotNull(e.getBindings(ScriptContext.ENGINE_SCOPE));
+	}
+	
+	@Test
+	public void testEngineHasContext() throws Exception {
+		assertNotNull(e.getContext());
+		assertSame(e.getContext(), e.getContext());
+	}
+	
+	@Test
+	public void testEngineSharesBindingsOfItsDefaultContext() throws Exception {
+		assertSame(e.getContext().getBindings(ScriptContext.ENGINE_SCOPE), e.getBindings(ScriptContext.ENGINE_SCOPE));
+		assertSame(e.getContext().getBindings(ScriptContext.GLOBAL_SCOPE), e.getBindings(ScriptContext.GLOBAL_SCOPE));
 	}
 
 	@Test

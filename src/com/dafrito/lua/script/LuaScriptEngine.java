@@ -94,32 +94,33 @@ public class LuaScriptEngine implements ScriptEngine {
 
 	@Override
 	public Bindings getBindings(int scope) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getContext().getBindings(scope);
 	}
 
 	@Override
 	public ScriptContext getContext() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.context;
 	}
 
 	@Override
 	public void put(String key, Object value) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setBindings(Bindings bindings, int scope) {
-		// TODO Auto-generated method stub
-		
+		this.getContext().setBindings(bindings, scope);
 	}
 
 	@Override
 	public void setContext(ScriptContext context) {
-		// TODO Auto-generated method stub
-		
+		if (!(context instanceof LuaScriptContext)) {
+			// TODO: This is required by the specification, but it's not
+			// important yet.
+			throw new UnsupportedOperationException(
+					"Foreign ScriptContext objects are not yet supported");
+		}
+		this.context = (LuaScriptContext) context;
 	}
 
 }
