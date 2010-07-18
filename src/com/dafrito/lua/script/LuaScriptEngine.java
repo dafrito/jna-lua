@@ -36,15 +36,17 @@ public class LuaScriptEngine implements ScriptEngine {
 	@Override
 	public Object eval(String script, ScriptContext context)
 			throws ScriptException {
-		if(!(context instanceof LuaScriptContext)) {
-			// TODO: This behavior is required by the spec, but it's not important right now.
-			throw new UnsupportedOperationException("Importing a foreign context is not yet supported");
+		if (!(context instanceof LuaScriptContext)) {
+			// TODO: This behavior is required by the spec, but it's not
+			// important right now.
+			throw new UnsupportedOperationException(
+					"Importing a foreign context is not yet supported");
 		}
-		LuaScriptContext lcontext = (LuaScriptContext)context;
+		LuaScriptContext lcontext = (LuaScriptContext) context;
 		lua_State s = lcontext.getState();
 		lua.luaL_loadstring(s, script);
 		lua.lua_call(s, 0, 1);
-		double rv=lua.lua_tonumber(s, 1);
+		double rv = lua.lua_tonumber(s, 1);
 		lua.lua_remove(s, 1);
 		return rv;
 	}
