@@ -2,7 +2,6 @@ package com.dafrito.lua.script;
 
 import java.io.Reader;
 
-import javax.script.AbstractScriptEngine;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;

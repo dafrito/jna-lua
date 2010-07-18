@@ -2,8 +2,6 @@ package com.dafrito.lua.script;
 
 import static org.junit.Assert.*;
 
-import java.io.StringReader;
-
 import javax.script.Bindings;
 import javax.script.Compilable;
 import javax.script.CompiledScript;
