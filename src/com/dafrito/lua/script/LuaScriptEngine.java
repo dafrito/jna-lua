@@ -13,7 +13,7 @@ import javax.script.SimpleBindings;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
-public class LuaScriptEngine extends AbstractScriptEngine implements ScriptEngine {
+public class LuaScriptEngine implements ScriptEngine {
 
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
@@ -60,6 +60,66 @@ public class LuaScriptEngine extends AbstractScriptEngine implements ScriptEngin
 	@Override
 	public ScriptEngineFactory getFactory() {
 		return this.factory;
+	}
+
+	@Override
+	public Object eval(String script) throws ScriptException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object eval(Reader reader) throws ScriptException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object eval(String script, Bindings n) throws ScriptException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object eval(Reader reader, Bindings n) throws ScriptException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object get(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Bindings getBindings(int scope) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ScriptContext getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void put(String key, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setBindings(Bindings bindings, int scope) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setContext(ScriptContext context) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
