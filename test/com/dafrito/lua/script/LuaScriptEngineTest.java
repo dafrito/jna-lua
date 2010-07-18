@@ -49,6 +49,7 @@ public class LuaScriptEngineTest {
 		assertNotNull(bindings);
 
 		bindings.put("t", "42");
+		assertEquals("42", bindings.get("t"));
 		assertEquals("42", e.eval("return t", bindings));
 	}
 
@@ -74,7 +75,7 @@ public class LuaScriptEngineTest {
 	public void testBindingsCreation() throws Exception {
 		assertNotNull(e.createBindings());
 		assertNotNull(e.getBindings(ScriptContext.ENGINE_SCOPE));
-		assertNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
+		assertNotNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
 	}
 	
 	@Test
