@@ -37,6 +37,11 @@ public class LuaScriptEngineTest {
 		assertEquals(2.0, e.eval("return 1+1"));
 		assertEquals(3.0, e.eval("a=2; return a+1"));
 	}
+	
+	@Test
+	public void testCreateBindings() throws Exception {
+		assertNotNull(e.createBindings());
+	}
 
 	@Test
 	public void testExplicitBindings() throws Exception {
