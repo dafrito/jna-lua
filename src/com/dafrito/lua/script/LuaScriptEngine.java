@@ -16,9 +16,9 @@ import lua.LuaLibrary.lua_State;
 public class LuaScriptEngine implements ScriptEngine {
 
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
-	
+
 	private final LuaScriptEngineFactory factory;
-	private final LuaScriptContext context;
+	private LuaScriptContext context;
 
 	public LuaScriptEngine(LuaScriptEngineFactory luaScriptEngineFactory) {
 		this.factory = luaScriptEngineFactory;
@@ -64,14 +64,12 @@ public class LuaScriptEngine implements ScriptEngine {
 
 	@Override
 	public Object eval(String script) throws ScriptException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.eval(script, this.getContext());
 	}
 
 	@Override
 	public Object eval(Reader reader) throws ScriptException {
-		// TODO Auto-generated method stub
-		return null;
+		return this.eval(reader, this.getContext());
 	}
 
 	@Override
