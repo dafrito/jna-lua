@@ -11,6 +11,8 @@ public class LuaTranslator {
 			lua.lua_pushstring(state, (String) v);
 		} else if(v instanceof Boolean) {
 			lua.lua_pushboolean(state, ((Boolean)v).booleanValue() ? 1 : 0);
+		} else if(v instanceof Number) {
+			lua.lua_pushnumber(state, ((Number) v).doubleValue());
 		} else {
 			throw new UnsupportedOperationException("Type is not supported for conversion to Lua. Type: "
 					+ v);
