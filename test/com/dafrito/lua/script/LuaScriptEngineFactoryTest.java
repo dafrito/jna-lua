@@ -25,7 +25,6 @@ public class LuaScriptEngineFactoryTest {
 		assertNotNull("Engine name must not be null", f.getEngineName());
 		assertNotNull("Engine version must not be null", f.getEngineVersion());
 		assertTrue("Factory must support 'lua' extension", f.getExtensions().contains("lua"));
-
 	}
 
 	@Test
