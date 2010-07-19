@@ -47,7 +47,9 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		// TODO: This method pollutes the stack if it fails.
 		this.translator.toLua(state, key);
 		lua.lua_gettable(state, LuaLibrary.LUA_GLOBALSINDEX);
-		return this.translator.fromLua(state, 1);
+		Object v = this.translator.fromLua(state, lua.lua_gettop(state));
+		lua.lua_settop(state, -2);
+		return v;
 	}
 
 	@Override
