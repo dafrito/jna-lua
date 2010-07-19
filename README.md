@@ -6,7 +6,7 @@ from PUC-Rio, written in C. Access to the native code is provided by
 [JNA](https://jna.dev.java.net/), so no JNI code is required. 
 
 This implementation provides two-way integration between Java and Lua. It also 
-strives to be a fully compliant implementation of the [JSR-233 specification](http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/technotes/guides/scripting/index.html]).
+strives to be a fully compliant implementation of the [JSR-233 specification](http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/technotes/guides/scripting/index.html).
 
 It does not provide custom APIs, libraries, or a Lua compiler. It also
 does not use any custom C code; native access is exclusively provided through
