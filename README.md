@@ -12,9 +12,9 @@ strives to be a fully compliant implementation of the
 The C API can be found in lua.jar. This jar was created by
 [JNAerator](http://code.google.com/p/jnaerator/), and it
 contains the interfaces to the functions contained in lua.h, lauxlib.h, and
-lualib.h. The function names have not been modified, so they are prefixed with
-lua_* or luaL_. While this makes the method names uglier, it also keeps the
-learning curve as flat as possible.
+lualib.h. The function names have not been modified, so they remain prefixed 
+with lua_* or luaL_. While this makes the method names uglier, it also keeps 
+the API as simple as possible.
 
 jna-lua is intended to be small and simple, so it excludes some features found
 in other implementations. Specifically, jna-lua does not include a separate Lua 
