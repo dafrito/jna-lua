@@ -93,8 +93,11 @@ public class LuaScriptContext implements ScriptContext {
 	public void setBindings(Bindings bindings, int scope) {
 		switch (scope) {
 		case ScriptContext.ENGINE_SCOPE:
-			// TODO: This is incorrect. New bindings should be copied to the lua environment. 
-			this.engineBindings=bindings;
+			if(bindings instanceof LuaBindings) {
+				this.engineBindings=bindings;
+			} else {
+				this.engineBindings.putAll(bindings);
+			}
 			break;
 		case ScriptContext.GLOBAL_SCOPE:
 			this.globalBindings=bindings;
