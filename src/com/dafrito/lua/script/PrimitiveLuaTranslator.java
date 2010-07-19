@@ -1,5 +1,7 @@
 package com.dafrito.lua.script;
 
+import java.lang.reflect.Array;
+
 import lua.LuaLibrary;
 
 public class PrimitiveLuaTranslator implements LuaTranslator {
@@ -18,6 +20,13 @@ public class PrimitiveLuaTranslator implements LuaTranslator {
 			lua.lua_pushboolean(state, ((Boolean)v).booleanValue() ? 1 : 0);
 		} else if(v instanceof Number) {
 			lua.lua_pushnumber(state, ((Number) v).doubleValue());
+		} else if(v.getClass().isArray()) {
+			lua.lua_createtable(state, 0, 0);
+			for (int i = 0; i < Array.getLength(v); i++) {
+				lua.lua_pushnumber(state, i + 1);
+				this.toLua(state, Array.get(v, i));
+				lua.lua_rawset(state, -3);
+			}
 		} else {
 			throw new UnsupportedOperationException("Type is not supported for conversion to Lua. Type: "
 					+ v);
