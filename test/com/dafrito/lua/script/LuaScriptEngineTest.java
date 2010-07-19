@@ -83,7 +83,7 @@ public class LuaScriptEngineTest {
 		Bindings b = e.createBindings();
 		b.put("A", 2);
 		e.setBindings(b, ScriptContext.ENGINE_SCOPE);
-		assertEquals(2, e.get("A"));
+		assertEquals(2.0, e.get("A"));
 	}
 	
 	@Test
