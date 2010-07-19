@@ -11,7 +11,7 @@ import javax.script.SimpleBindings;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
-public class LuaBindings implements Bindings {
+public class LuaBindings extends AbstractMap<String, Object> implements Bindings {
 
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
@@ -65,18 +65,6 @@ public class LuaBindings implements Bindings {
 	}
 
 	@Override
-	public void putAll(Map<? extends String, ? extends Object> toMerge) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Object remove(Object key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
 		
@@ -84,12 +72,6 @@ public class LuaBindings implements Bindings {
 
 	@Override
 	public boolean containsValue(Object value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
 	}
