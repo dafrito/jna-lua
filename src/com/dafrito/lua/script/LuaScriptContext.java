@@ -103,7 +103,7 @@ public class LuaScriptContext implements ScriptContext {
 			this.globalBindings=bindings;
 			break;
 		default:
-			throw new IllegalArgumentException("invalid scope");
+			throw new IllegalArgumentException("Scope is not supported. Scope: " + scope);
 		}
 	}
 
