@@ -40,6 +40,9 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		if(key == null) {
 			throw new NullPointerException("key must not be null");
 		}
+		if(key instanceof String && ((String)key).startsWith("javax.script.")) {
+			return this.getSpecialProperty((String)key);
+		}
 		// TODO: This method pollutes the stack if it fails.
 		this.translator.toLua(state, key);
 		lua.lua_gettable(state, LuaLibrary.LUA_GLOBALSINDEX);
@@ -57,12 +60,33 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		if(name == null) {
 			throw new NullPointerException("key must not be null");
 		}
+		if(name instanceof String && ((String)name).startsWith("javax.script.")) {
+			return this.setSpecialProperty((String)name, value);
+		}
 		Object old = this.get(name);
 		// TODO: This method pollutes the stack if it fails.
 		this.translator.toLua(state, name);
 		this.translator.toLua(state, value);
 		lua.lua_settable(state, LuaLibrary.LUA_GLOBALSINDEX);
 		return old;
+	}
+
+	private Object setSpecialProperty(String name, Object value) {
+		if(name.equals("javax.script.argv")) {
+			return this.put("arg", (Object[])value);
+		} else {
+			// We ignore other special properties
+			return null;
+		}
+	}
+	
+	private Object getSpecialProperty(String name) {
+		if(name.equals("javax.script.argv")) {
+			return this.get("arg");
+		} else {
+			// We ignore other special properties
+			return null;
+		}
 	}
 
 	@Override
