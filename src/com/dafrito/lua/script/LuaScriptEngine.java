@@ -37,10 +37,7 @@ public class LuaScriptEngine implements ScriptEngine {
 	public Object eval(String script, ScriptContext context)
 			throws ScriptException {
 		if (!(context instanceof LuaScriptContext)) {
-			// TODO: This behavior is required by the spec, but it's not
-			// important right now.
-			throw new UnsupportedOperationException(
-					"Importing a foreign context is not yet supported");
+			return this.eval(script, new LuaScriptContext(context));
 		}
 		LuaScriptContext lcontext = (LuaScriptContext) context;
 		lua_State s = lcontext.getState();

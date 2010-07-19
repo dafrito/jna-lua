@@ -23,6 +23,11 @@ public class LuaScriptContext implements ScriptContext {
 		this.engineBindings = new LuaBindings(this.state);
 	}
 
+	public LuaScriptContext(ScriptContext context) {
+		this();
+		this.engineBindings.putAll(context.getBindings(ScriptContext.ENGINE_SCOPE));
+	}
+
 	@Override
 	public Object getAttribute(String name) {
 		// TODO Auto-generated method stub
