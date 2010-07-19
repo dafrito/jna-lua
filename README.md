@@ -6,8 +6,7 @@ from PUC-Rio, written in C. Access to the native code is provided by
 [JNA](https://jna.dev.java.net/), so no JNI code is required. 
 
 This implementation provides two-way integration between Java and Lua. It also 
-strives to be a fully compliant implementation of the
-[http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/technotes/guides/scripting/index.html](JSR-223 specification).
+strives to be a fully compliant implementation of the [JSR-233 specification](http://download.oracle.com/docs/cd/E17409_01/javase/6/docs/technotes/guides/scripting/index.html]).
 
 It does not provide custom APIs, libraries, or a Lua compiler. It also
 does not use any custom C code; native access is exclusively provided through
@@ -25,11 +24,11 @@ C libraries being available.
 
 ### Alternatives
 
-* [http://lua-users.org/wiki/BindingCodeToLua] -- a list of bindings
 * [JNLua](http://www.naef.com/jnlua/) -- similar to this project 
 * [LuaJava](http://www.keplerproject.org/luajava/) -- oldest and arguably the most popular
 * [kahlua](http://code.google.com/p/kahlua/) -- Lua re-implemented in Java
 
 ### See also
 
+* [Binding code to Lua](http://lua-users.org/wiki/BindingCodeToLua) -- lists bindings for other languages
 * [JSR 223 explanation](http://java.sun.com/developer/technicalArticles/J2SE/Desktop/scripting/)
