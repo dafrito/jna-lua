@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.script.Bindings;
-import javax.script.SimpleBindings;
 
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
