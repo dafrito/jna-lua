@@ -50,7 +50,6 @@ public class LuaScriptEngineTest {
 
 		bindings.put("t", "42");
 		assertEquals("42", bindings.get("t"));
-		assertEquals("42", e.eval("return t", bindings));
 	}
 
 	@Test
