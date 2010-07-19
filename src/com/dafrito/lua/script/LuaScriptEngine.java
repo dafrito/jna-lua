@@ -84,13 +84,12 @@ public class LuaScriptEngine implements ScriptEngine {
 
 	@Override
 	public Object get(String key) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getContext().getBindings(ScriptContext.ENGINE_SCOPE).get(key);
 	}
 
 	@Override
 	public void put(String key, Object value) {
-		// TODO Auto-generated method stub
+		this.getContext().getBindings(ScriptContext.ENGINE_SCOPE).put(key, value);
 	}
 
 	@Override
