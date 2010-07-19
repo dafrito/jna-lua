@@ -44,10 +44,10 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 			return this.getSpecialProperty((String)key);
 		}
 		// TODO: This method pollutes the stack if it fails.
-		this.translator.toLua(state, key);
-		lua.lua_gettable(state, LuaLibrary.LUA_GLOBALSINDEX);
-		Object v = this.translator.fromLua(state, lua.lua_gettop(state));
-		lua.lua_settop(state, -2);
+		this.getTranslator().toLua(getState(), key);
+		lua.lua_gettable(getState(), LuaLibrary.LUA_GLOBALSINDEX);
+		Object v = this.getTranslator().fromLua(getState(), lua.lua_gettop(getState()));
+		lua.lua_settop(getState(), -2);
 		return v;
 	}
 
@@ -65,9 +65,9 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		}
 		Object old = this.get(name);
 		// TODO: This method pollutes the stack if it fails.
-		this.translator.toLua(state, name);
-		this.translator.toLua(state, value);
-		lua.lua_settable(state, LuaLibrary.LUA_GLOBALSINDEX);
+		this.getTranslator().toLua(getState(), name);
+		this.getTranslator().toLua(getState(), value);
+		lua.lua_settable(getState(), LuaLibrary.LUA_GLOBALSINDEX);
 		return old;
 	}
 
@@ -122,6 +122,14 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	public Collection<Object> values() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public lua_State getState() {
+		return state;
+	}
+
+	public LuaTranslator getTranslator() {
+		return translator;
 	}
 
 }
