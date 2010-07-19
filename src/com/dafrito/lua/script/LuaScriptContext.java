@@ -2,6 +2,8 @@ package com.dafrito.lua.script;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.script.Bindings;
@@ -31,38 +33,41 @@ public class LuaScriptContext implements ScriptContext {
 
 	@Override
 	public List<Integer> getScopes() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.unmodifiableList(Arrays.asList(ScriptContext.ENGINE_SCOPE, ScriptContext.GLOBAL_SCOPE));
 	}
 	
 	@Override
 	public Object getAttribute(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		int scope = this.getAttributesScope(name);
+		if(scope == -1) {
+			return null;
+		}
+		return this.getAttribute(name, scope);
 	}
 
 	@Override
 	public Object getAttribute(String name, int scope) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getBindings(scope).get(name);
 	}
 
 	@Override
 	public int getAttributesScope(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+		for(int scope : this.getScopes()) {
+			if(this.getAttribute(name, scope) != null) {
+				return scope;
+			}
+		}
+		return -1;
 	}
 
 	@Override
 	public void setAttribute(String name, Object value, int scope) {
-		// TODO Auto-generated method stub
-
+		this.getBindings(scope).put(name, value);
 	}
 
 	@Override
 	public Object removeAttribute(String name, int scope) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getBindings(scope).remove(name);
 	}
 
 	@Override
