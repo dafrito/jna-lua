@@ -48,8 +48,14 @@ public class PrimitiveLuaTranslator implements LuaTranslator {
 		case LuaLibrary.LUA_TNIL:
 		case LuaLibrary.LUA_TNONE:
 			return null;
+		case LuaLibrary.LUA_TTABLE:
+		case LuaLibrary.LUA_TFUNCTION:
+		case LuaLibrary.LUA_TUSERDATA:
+		case LuaLibrary.LUA_TLIGHTUSERDATA:
+		case LuaLibrary.LUA_TTHREAD:
+			throw new UnsupportedOperationException("Type is not yet supported for conversion to Java.");
 		default:
-			throw new UnsupportedOperationException("Type is not supported for conversion to Java.");
+			throw new IllegalArgumentException("Unexpected type: " + type);
 		}
 	}
 
