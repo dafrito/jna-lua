@@ -80,9 +80,11 @@ public class LuaScriptEngineTest {
 	
 	@Test
 	public void testEngineBindingsCanBeChanged() throws Exception {
+		e.put("A", 1);
 		Bindings b = e.createBindings();
+		b.put("A", 2);
 		e.setBindings(b, ScriptContext.ENGINE_SCOPE);
-		assertSame(b, e.getBindings(ScriptContext.ENGINE_SCOPE));
+		assertEquals(2, e.get("A"));
 	}
 	
 	@Test
