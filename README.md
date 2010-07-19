@@ -23,13 +23,13 @@ learning curve as small as possible.
 This is not a Java implementation of Lua. It depends entirely on a existing Lua
 C libraries being available. 
 
-=== Alternatives ===
+### Alternatives
 
 * [http://lua-users.org/wiki/BindingCodeToLua] -- a list of bindings
 * [JNLua](http://www.naef.com/jnlua/) -- similar to this project 
 * [LuaJava](http://www.keplerproject.org/luajava/) -- oldest and arguably the most popular
 * [kahlua](http://code.google.com/p/kahlua/) -- Lua re-implemented in Java
 
-=== See also ===
+### See also
 
 * [JSR 223 explanation](http://java.sun.com/developer/technicalArticles/J2SE/Desktop/scripting/)
