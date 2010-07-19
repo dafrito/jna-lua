@@ -16,12 +16,8 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	
 	private final lua_State state;
 
-	private LuaTranslator translator;
+	private final LuaTranslator translator;
 
-	public LuaBindings(LuaLibrary.lua_State state) {
-		this(state, new LuaTranslator());
-	}
-	
 	public LuaBindings(LuaLibrary.lua_State state, LuaTranslator translator) {
 		this.state = state;
 		this.translator = translator;

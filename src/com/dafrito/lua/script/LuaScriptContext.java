@@ -17,10 +17,11 @@ public class LuaScriptContext implements ScriptContext {
 	private Bindings globalBindings = GLOBAL_BINDINGS;
 	private Bindings engineBindings;
 	private final lua_State state;
+	private LuaTranslator translator = new PrimitiveLuaTranslator();
 
 	public LuaScriptContext() {
 		this.state = LuaLibrary.INSTANCE.luaL_newstate();
-		this.engineBindings = new LuaBindings(this.state);
+		this.engineBindings = new LuaBindings(this.state, this.translator);
 	}
 
 	public LuaScriptContext(ScriptContext context) {
@@ -132,6 +133,14 @@ public class LuaScriptContext implements ScriptContext {
 
 	public lua_State getState() {
 		return state;
+	}
+
+	public LuaTranslator getTranslator() {
+		return this.translator;
+	}
+	
+	public void setTranslator(LuaTranslator translator) {
+		this.translator = translator;
 	}
 
 }
