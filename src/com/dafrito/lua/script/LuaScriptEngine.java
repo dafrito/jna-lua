@@ -89,23 +89,23 @@ public class LuaScriptEngine implements ScriptEngine {
 	}
 
 	@Override
-	public Bindings getBindings(int scope) {
-		return this.getContext().getBindings(scope);
-	}
-
-	@Override
-	public ScriptContext getContext() {
-		return this.context;
-	}
-
-	@Override
 	public void put(String key, Object value) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
+	public Bindings getBindings(int scope) {
+		return this.getContext().getBindings(scope);
+	}
+
+	@Override
 	public void setBindings(Bindings bindings, int scope) {
 		this.getContext().setBindings(bindings, scope);
+	}
+
+	@Override
+	public ScriptContext getContext() {
+		return this.context;
 	}
 
 	@Override
