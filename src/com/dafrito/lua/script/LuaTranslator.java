@@ -26,6 +26,8 @@ public class LuaTranslator {
 			return lua.lua_tolstring(state, idx, null).getString(0);
 		case LuaLibrary.LUA_TBOOLEAN:
 			return 1 == lua.lua_toboolean(state, idx);
+		case LuaLibrary.LUA_TNUMBER:
+			return lua.lua_tonumber(state, idx);
 		case LuaLibrary.LUA_TNIL:
 		case LuaLibrary.LUA_TNONE:
 			return null;
