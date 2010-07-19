@@ -42,10 +42,13 @@ public class LuaScriptEngine implements ScriptEngine {
 		LuaScriptContext lcontext = (LuaScriptContext) context;
 		lua_State s = lcontext.getState();
 		lua.luaL_loadstring(s, script);
-		lua.lua_call(s, 0, 1);
-		double rv = lua.lua_tonumber(s, 1);
-		lua.lua_remove(s, 1);
-		return rv;
+		lua.lua_call(s, 0, LuaLibrary.LUA_MULTRET);
+		if(lua.lua_gettop(s) > 1) {
+			throw new UnsupportedOperationException("Multiple return values is not yet supported. Values returned: " + lua.lua_gettop(s));
+		}
+		Object v = this.context.getTranslator().fromLua(s, -1);
+		lua.lua_settop(s, -2);
+		return v;
 	}
 
 	@Override
