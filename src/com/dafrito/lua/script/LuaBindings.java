@@ -50,6 +50,10 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 
 	@Override
 	public Object put(String name, Object value) {
+		return this.doPut(name, value);
+	}
+	
+	private Object doPut(Object name, Object value) {
 		if(name == null) {
 			throw new NullPointerException("key must not be null");
 		}
@@ -59,6 +63,11 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		this.translator.toLua(state, value);
 		lua.lua_settable(state, LuaLibrary.LUA_GLOBALSINDEX);
 		return old;
+	}
+
+	@Override
+	public Object remove(Object key) {
+		return this.doPut(key, null);
 	}
 
 	@Override
@@ -90,6 +99,5 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

@@ -10,7 +10,9 @@ public class PrimitiveLuaTranslator implements LuaTranslator {
 	 * @see com.dafrito.lua.script.Translator#toLua(lua.LuaLibrary.lua_State, java.lang.Object)
 	 */
 	public void toLua(LuaLibrary.lua_State state, Object v) {
-		if (v instanceof String) {
+		if (v == null) {
+			lua.lua_pushnil(state);
+		} else if (v instanceof String) {
 			lua.lua_pushstring(state, (String) v);
 		} else if(v instanceof Boolean) {
 			lua.lua_pushboolean(state, ((Boolean)v).booleanValue() ? 1 : 0);
