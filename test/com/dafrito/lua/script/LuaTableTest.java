@@ -4,19 +4,26 @@ import static org.junit.Assert.assertEquals;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class LuaTableTest {
 	LuaLibrary lua = LuaLibrary.INSTANCE;
+	private LuaBindings b;
+	private LuaScriptContext ctx;
 
 	@Test
 	public void getAndPutAValueIntoATable() throws Exception {
-		LuaScriptContext ctx = new LuaScriptContext();
-		LuaBindings b = ctx.getGlobals();
 		lua.lua_createtable(b.getState(), 0, 0);
 		LuaTable t = new LuaTable(new LuaReference(b));
 		t.set(1, "No time");
 		assertEquals("No time", t.get(1));
+	}
+	
+	@Before
+	public void setup() {
+		ctx = new LuaScriptContext();
+		b = ctx.getGlobals();
 	}
 
 	class LuaTable {
