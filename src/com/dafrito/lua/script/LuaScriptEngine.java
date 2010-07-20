@@ -99,7 +99,7 @@ public class LuaScriptEngine implements ScriptEngine {
 	public Bindings getBindings(int scope) {
 		return this.getContext().getBindings(scope);
 	}
-
+	
 	@Override
 	public void setBindings(Bindings bindings, int scope) {
 		this.getContext().setBindings(bindings, scope);
