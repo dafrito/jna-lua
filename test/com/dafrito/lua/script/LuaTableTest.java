@@ -27,9 +27,9 @@ public class LuaTableTest {
 	}
 
 	class LuaTable {
-		private LuaBindings b;
-		private LuaReference ref;
-		private lua_State s;
+		private final LuaBindings b;
+		private final LuaReference ref;
+		private final lua_State s;
 
 		public LuaTable(LuaReference ref) {
 			this.b = ref.getBindings();
