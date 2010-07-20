@@ -106,7 +106,7 @@ public class LuaScriptEngine implements ScriptEngine {
 	}
 
 	@Override
-	public ScriptContext getContext() {
+	public LuaScriptContext getContext() {
 		return this.context;
 	}
 
