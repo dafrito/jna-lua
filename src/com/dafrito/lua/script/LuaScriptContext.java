@@ -81,6 +81,21 @@ public class LuaScriptContext implements ScriptContext {
 			return null;
 		}
 	}
+	
+	/**
+	 * Return the global environment for this {@link ScriptContext}. This is identical to:
+	 * <pre>
+	 * return this.getBindings(ScriptContext.ENGINE_SCOPE);
+	 * </pre>
+	 * 
+	 * @return the global environment for this script context.
+	 * 
+	 * @see ScriptContext#ENGINE_SCOPE
+	 * @see LuaBindings
+	 */
+	public LuaBindings getGlobals() {
+		return this.engineBindings;
+	}
 
 	@Override
 	public Writer getErrorWriter() {
