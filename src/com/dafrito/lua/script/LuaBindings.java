@@ -127,9 +127,17 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	public lua_State getState() {
 		return state;
 	}
-
+	
 	public LuaTranslator getTranslator() {
 		return translator;
+	}
+
+	public Object fromLua(int idx) {
+		return translator.fromLua(state, idx);
+	}
+
+	public void toLua(Object v) {
+		translator.toLua(state, v);		
 	}
 
 }
