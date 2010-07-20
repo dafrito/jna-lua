@@ -1,23 +1,19 @@
 package com.dafrito.lua;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dafrito.lua.script.LuaScriptEngine;
-
 public class LuaTest {
 
-	private LuaScriptEngine e;
 	private LuaLibrary lua;
 	private lua_State s;
 	
 	@Before
 	public void setup() {
-		this.e = new LuaScriptEngine();
 		this.lua = LuaLibrary.INSTANCE;
 		this.s = lua.luaL_newstate();
 	}
