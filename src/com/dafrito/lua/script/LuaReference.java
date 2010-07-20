@@ -12,19 +12,23 @@ public class LuaReference {
 	private static final FinalizableReferenceQueue queue = new FinalizableReferenceQueue();
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
-	private final LuaBindings b;
+	private final LuaBindings bindings;
 	private final int ref;
 
 	public LuaReference(LuaBindings b) {
-		this.b = b;
+		this.bindings = b;
 		this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
 		new LuaPhantomReference(this, queue);
 	}
 
 	public void get() {
-		lua.lua_rawgeti(b.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
+		lua.lua_rawgeti(bindings.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
 	}
 
+	public LuaBindings getBindings() {
+		return bindings;
+	}
+	
 	private static class LuaPhantomReference extends FinalizablePhantomReference<LuaReference> {
 
 		private final int ref;
@@ -32,7 +36,7 @@ public class LuaReference {
 		
 		protected LuaPhantomReference(LuaReference referent, FinalizableReferenceQueue queue) {
 			super(referent, queue);
-			this.state = new WeakReference<lua_State>(referent.b.getState());
+			this.state = new WeakReference<lua_State>(referent.getBindings().getState());
 			this.ref = referent.ref;
 		}
 		
