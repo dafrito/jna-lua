@@ -17,7 +17,7 @@ public class LuaScriptContext implements ScriptContext {
 
 	private static final Bindings GLOBAL_BINDINGS = new SimpleBindings();
 	private Bindings globalBindings = GLOBAL_BINDINGS;
-	private Bindings engineBindings;
+	private LuaBindings engineBindings;
 	private final lua_State state;
 	private LuaTranslator translator = new PrimitiveLuaTranslator();
 
@@ -122,7 +122,7 @@ public class LuaScriptContext implements ScriptContext {
 		switch (scope) {
 		case ScriptContext.ENGINE_SCOPE:
 			if(bindings instanceof LuaBindings) {
-				this.engineBindings=bindings;
+				this.engineBindings=(LuaBindings)bindings;
 			} else {
 				this.engineBindings.putAll(bindings);
 			}
