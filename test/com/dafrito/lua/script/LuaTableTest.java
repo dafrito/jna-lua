@@ -54,42 +54,4 @@ public class LuaTableTest {
 			lua.lua_settop(s, -2);
 		}
 	}
-
-	class LuaReference {
-		private final LuaBindings b;
-		private int ref;
-
-		public LuaReference(LuaBindings b) {
-			this.b = b;
-			this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
-			check();
-		}
-
-		public LuaBindings getBindings() {
-			return this.b;
-		}
-
-		public void get() {
-			check();
-			lua.lua_rawgeti(b.getState(), LuaLibrary.LUA_REGISTRYINDEX, this.ref);
-		}
-
-		private void check() {
-			if (this.isClosed()) {
-				throw new RuntimeException();
-			}
-		}
-
-		public boolean isClosed() {
-			return this.ref == LuaLibrary.LUA_REFNIL;
-		}
-
-		public void close() {
-			if (this.isClosed()) {
-				return;
-			}
-			lua.luaL_unref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX, this.ref);
-			this.ref = LuaLibrary.LUA_REFNIL;
-		}
-	}
 }
