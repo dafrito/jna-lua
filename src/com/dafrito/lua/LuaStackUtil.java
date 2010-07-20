@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dafrito.lua.script.LuaBindings;
 import com.dafrito.lua.script.LuaTranslator;
 
 import lua.LuaLibrary;
@@ -38,6 +39,18 @@ public class LuaStackUtil {
 			stack.add(get(s, t, i+1));
 		}
 		return stack;
+	}
+
+	public void print(LuaBindings b) {
+		print(b.getState(), b.getTranslator(), System.out);
+	}
+
+	public void print(LuaBindings b, OutputStream os) {
+		print(b.getState(), b.getTranslator(), os);
+	}
+
+	public void print(lua_State s, LuaTranslator t) {
+		print(s, t, System.out);
 	}
 	
 	public void print(lua_State s, LuaTranslator t, OutputStream os) {
