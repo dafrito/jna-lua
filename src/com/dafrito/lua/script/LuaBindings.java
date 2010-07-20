@@ -2,7 +2,6 @@ package com.dafrito.lua.script;
 
 import java.util.AbstractMap;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 import javax.script.Bindings;

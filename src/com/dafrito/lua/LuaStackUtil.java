@@ -2,15 +2,14 @@ package com.dafrito.lua;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dafrito.lua.script.LuaBindings;
-import com.dafrito.lua.script.LuaTranslator;
-
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
+
+import com.dafrito.lua.script.LuaBindings;
+import com.dafrito.lua.script.LuaTranslator;
 
 public class LuaStackUtil {
 	
