@@ -18,7 +18,7 @@ public class LuaReference {
 	public LuaReference(LuaBindings b) {
 		this.bindings = b;
 		this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
-		new LuaPhantomReference(this, queue);
+		new LuaPhantomReference(this, queue).enqueue();
 	}
 
 	public void get() {
