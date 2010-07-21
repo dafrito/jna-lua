@@ -1,6 +1,9 @@
 package com.dafrito.lua.script;
 
+import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
+import java.util.HashSet;
+import java.util.Set;
 
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
@@ -10,6 +13,7 @@ import com.google.common.base.FinalizableReferenceQueue;
 
 public class LuaReference {
 	private static final FinalizableReferenceQueue queue = new FinalizableReferenceQueue();
+	private static final Set<Reference<?>> references = new HashSet<Reference<?>>();
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
 	private final LuaBindings bindings;
@@ -18,7 +22,7 @@ public class LuaReference {
 	public LuaReference(LuaBindings b) {
 		this.bindings = b;
 		this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
-		new LuaPhantomReference(this, queue).enqueue();
+		references.add(new LuaPhantomReference(this, queue));
 	}
 
 	public void get() {
@@ -42,6 +46,7 @@ public class LuaReference {
 		
 		@Override
 		public void finalizeReferent() {
+			references.remove(this);
 			lua_State state = this.state.get();
 			if(state != null) {
 				this.state.clear();
