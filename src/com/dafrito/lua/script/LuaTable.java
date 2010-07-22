@@ -1,9 +1,11 @@
 package com.dafrito.lua.script;
 
+import java.util.Iterator;
+
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
-public class LuaTable {
+public class LuaTable implements Iterable<Object> {
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
 	private final LuaBindings b;
@@ -64,4 +66,31 @@ public class LuaTable {
 		lua.lua_settable(s, -3);
 		lua.lua_settop(s, -2);
 	}
+	
+	public Iterator<Object> iterator() {
+		ref.get();
+		return new Iterator<Object>() {
+			private int i=0;
+
+			@Override
+			public boolean hasNext() {
+				return size() > i;
+			}
+
+			@Override
+			public Object next() {
+				lua.lua_rawgeti(s, -1, ++i);
+				Object v = b.fromLua(-1);
+				lua.lua_settop(s, -2);
+				return v;
+			}
+
+			@Override
+			public void remove() {
+				LuaTable.this.remove(--i);
+			}
+		};
+		
+	}
+
 }
