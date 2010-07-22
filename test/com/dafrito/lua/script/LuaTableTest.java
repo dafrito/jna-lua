@@ -17,6 +17,12 @@ public class LuaTableTest {
 	private LuaBindings b;
 	private LuaScriptContext ctx;
 
+	@Before
+	public void setup() {
+		ctx = new LuaScriptContext();
+		b = ctx.getGlobals();
+	}
+	
 	@Test
 	public void getAndPutAValueIntoATable() throws Exception {
 		LuaTable t = new LuaTable(b);
@@ -73,13 +79,6 @@ public class LuaTableTest {
 		}
 		assertEquals(3, counter);
 		assertEquals(2, t.size());
-	}
-	
-	
-	@Before
-	public void setup() {
-		ctx = new LuaScriptContext();
-		b = ctx.getGlobals();
 	}
 	
 }
