@@ -82,4 +82,13 @@ public class LuaListTest {
 		assertEquals(2, t.size());
 	}
 
+	@Test
+	public void clearEmptiesTheList() throws Exception {
+		LuaList t = new LuaList(b);
+		t.add("A");
+		t.add("B");
+		t.add("C");
+		t.clear();
+		assertTrue(t.isEmpty());
+	}
 }

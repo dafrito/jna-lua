@@ -1,11 +1,14 @@
 package com.dafrito.lua.script;
 
+import java.util.AbstractList;
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.RandomAccess;
 
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
-public class LuaList implements Iterable<Object> {
+public class LuaList extends AbstractList<Object> implements RandomAccess {
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
 	private final LuaBindings b;
@@ -103,7 +106,18 @@ public class LuaList implements Iterable<Object> {
 		lua.lua_settable(s, -3);
 		lua.lua_settop(s, -2);
 	}
-	
+
+	@Override
+	public void clear() {
+		ref.get();
+		int sz = size();
+		for(int i=0; i < sz; i++) {
+			lua.lua_pushnil(s);
+			lua.lua_rawseti(s, -2, i);
+		}
+		lua.lua_settop(s, -2);
+	}
+
 	public Iterator<Object> iterator() {
 		ref.get();
 		return new Iterator<Object>() {
