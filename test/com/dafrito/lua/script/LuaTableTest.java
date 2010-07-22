@@ -28,6 +28,14 @@ public class LuaTableTest {
 		assertEquals(0, t.size());
 	}
 	
+	@Test
+	public void sizeOfOneElementTableIsOne() throws Exception {
+		lua.lua_createtable(b.getState(), 0, 0);
+		LuaTable t = new LuaTable(new LuaReference(b));
+		t.add("No time");
+		assertEquals(1, t.size());
+	}
+	
 	@Before
 	public void setup() {
 		ctx = new LuaScriptContext();
@@ -45,8 +53,18 @@ public class LuaTableTest {
 			this.s = b.getState();
 		}
 
+		public void add(Object v) {
+			ref.get();
+			int sz = size();
+			this.b.toLua(v);
+			lua.lua_rawseti(s, -2, sz+1);
+		}
+
 		public int size() {
-			return 0;
+			ref.get();
+			int sz = lua.lua_objlen(s, -1).intValue();
+			lua.lua_settop(s, -2);
+			return sz;
 		}
 
 		public Object get(Object k) {
