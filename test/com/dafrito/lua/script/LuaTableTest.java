@@ -58,6 +58,7 @@ public class LuaTableTest {
 			int sz = size();
 			this.b.toLua(v);
 			lua.lua_rawseti(s, -2, sz+1);
+			lua.lua_settop(s, -2);
 		}
 
 		public int size() {
