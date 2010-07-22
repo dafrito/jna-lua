@@ -92,12 +92,12 @@ public class LuaScriptEngine implements ScriptEngine {
 
 	@Override
 	public Object get(String key) {
-		return this.getContext().getBindings(ScriptContext.ENGINE_SCOPE).get(key);
+		return this.getContext().getGlobals().get(key);
 	}
 
 	@Override
 	public void put(String key, Object value) {
-		this.getContext().getBindings(ScriptContext.ENGINE_SCOPE).put(key, value);
+		this.getContext().getGlobals().put(key, value);
 	}
 
 	@Override
