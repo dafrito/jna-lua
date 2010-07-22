@@ -11,7 +11,7 @@ import lua.LuaLibrary;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LuaTableTest {
+public class LuaListTest {
 	private static final String V = "No time";
 	LuaLibrary lua = LuaLibrary.INSTANCE;
 	private LuaBindings b;
@@ -25,7 +25,7 @@ public class LuaTableTest {
 	
 	@Test
 	public void getAndSetAValueInATable() throws Exception {
-		LuaTable t = new LuaTable(b);
+		LuaList t = new LuaList(b);
 		t.set(0, V);
 		assertEquals(V, t.get(0));
 		assertEquals(1, t.size());
@@ -33,7 +33,7 @@ public class LuaTableTest {
 	
 	@Test
 	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
-		LuaTable t = new LuaTable(b);
+		LuaList t = new LuaList(b);
 		t.add(V);
 		t.remove(0);
 		assertTrue(t.isEmpty());
@@ -41,7 +41,7 @@ public class LuaTableTest {
 
 	@Test
 	public void iterateOverAnOneElementTable() throws Exception {
-		LuaTable t = new LuaTable(b);
+		LuaList t = new LuaList(b);
 		t.add(V);
 		t.add(42.0d);
 		Iterator<Object> i = t.iterator();
@@ -53,7 +53,7 @@ public class LuaTableTest {
 
 	@Test
 	public void removeAnElementUsingAnIterator() throws Exception {
-		LuaTable t = new LuaTable(b);
+		LuaList t = new LuaList(b);
 		t.add("A");
 		t.add("B");
 		t.add("C");

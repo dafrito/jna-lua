@@ -5,20 +5,20 @@ import java.util.Iterator;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
-public class LuaTable implements Iterable<Object> {
+public class LuaList implements Iterable<Object> {
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 	
 	private final LuaBindings b;
 	private final LuaReference ref;
 	private final lua_State s;
 	
-	public LuaTable(LuaBindings b) {
+	public LuaList(LuaBindings b) {
 		this.b=b;
 		this.s=b.getState();
 		this.ref = LuaReference.newTable(b);
 	}
 
-	public LuaTable(LuaReference ref) {
+	public LuaList(LuaReference ref) {
 		this.b = ref.getBindings();
 		this.ref = ref;
 		this.s = b.getState();
@@ -117,7 +117,7 @@ public class LuaTable implements Iterable<Object> {
 
 			@Override
 			public void remove() {
-				LuaTable.this.remove(--i);
+				LuaList.this.remove(--i);
 			}
 		};
 		
