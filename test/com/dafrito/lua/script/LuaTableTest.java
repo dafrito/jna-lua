@@ -24,16 +24,10 @@ public class LuaTableTest {
 	}
 	
 	@Test
-	public void getAndPutAValueIntoATable() throws Exception {
+	public void getAndSetAValueInATable() throws Exception {
 		LuaTable t = new LuaTable(b);
 		t.set(1, V);
 		assertEquals(V, t.get(1));
-	}
-
-	@Test
-	public void sizeOfOneElementTableIsOne() throws Exception {
-		LuaTable t = new LuaTable(b);
-		t.add(V);
 		assertEquals(1, t.size());
 	}
 	
@@ -44,13 +38,7 @@ public class LuaTableTest {
 		t.remove(0);
 		assertTrue(t.isEmpty());
 	}
-	
-	@Test
-	public void iterateOverAnEmptyTable() throws Exception {
-		LuaTable t = new LuaTable(b);
-		assertFalse(t.iterator().hasNext());
-	}
-	
+
 	@Test
 	public void iterateOverAnOneElementTable() throws Exception {
 		LuaTable t = new LuaTable(b);
