@@ -19,20 +19,21 @@ public class LuaTableTest {
 		t.set(1, "No time");
 		assertEquals("No time", t.get(1));
 	}
-	
-	@Test
-	public void sizeOfAnEmptyTableIsZero() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
-		assertEquals(0, t.size());
-	}
-	
+
 	@Test
 	public void sizeOfOneElementTableIsOne() throws Exception {
 		lua.lua_createtable(b.getState(), 0, 0);
 		LuaTable t = new LuaTable(new LuaReference(b));
 		t.add("No time");
 		assertEquals(1, t.size());
+	}
+	
+	@Test
+	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
+		lua.lua_createtable(b.getState(), 0, 0);
+		LuaTable t = new LuaTable(new LuaReference(b));
+		t.add("No time");
+		t.remove(0);
 	}
 	
 	@Before
