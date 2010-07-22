@@ -54,5 +54,10 @@ public class LuaReference {
 			}
 		}
 	}
+	
+	public static LuaReference newTable(LuaBindings b) {
+		lua.lua_createtable(b.getState(), 0, 0);
+		return new LuaReference(b);
+	}
 
 }

@@ -18,24 +18,21 @@ public class LuaTableTest {
 
 	@Test
 	public void getAndPutAValueIntoATable() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		t.set(1, "No time");
 		assertEquals("No time", t.get(1));
 	}
 
 	@Test
 	public void sizeOfOneElementTableIsOne() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		t.add("No time");
 		assertEquals(1, t.size());
 	}
 	
 	@Test
 	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		t.add("No time");
 		t.remove(0);
 		assertTrue(t.isEmpty());
@@ -43,15 +40,13 @@ public class LuaTableTest {
 	
 	@Test
 	public void iterateOverAnEmptyTable() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		assertFalse(t.iterator().hasNext());
 	}
 	
 	@Test
 	public void iterateOverAnOneElementTable() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		t.add("No time");
 		t.add(42.0d);
 		Iterator<Object> i = t.iterator();
@@ -63,8 +58,7 @@ public class LuaTableTest {
 
 	@Test
 	public void removeAnElementUsingAnIterator() throws Exception {
-		lua.lua_createtable(b.getState(), 0, 0);
-		LuaTable t = new LuaTable(new LuaReference(b));
+		LuaTable t = new LuaTable(b);
 		t.add("A");
 		t.add("B");
 		t.add("C");

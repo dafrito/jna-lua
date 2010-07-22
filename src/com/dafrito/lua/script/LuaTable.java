@@ -11,6 +11,12 @@ public class LuaTable implements Iterable<Object> {
 	private final LuaBindings b;
 	private final LuaReference ref;
 	private final lua_State s;
+	
+	public LuaTable(LuaBindings b) {
+		this.b=b;
+		this.s=b.getState();
+		this.ref = LuaReference.newTable(b);
+	}
 
 	public LuaTable(LuaReference ref) {
 		this.b = ref.getBindings();
