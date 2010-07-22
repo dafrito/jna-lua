@@ -31,6 +31,18 @@ public class LuaListTest {
 		assertEquals(1, t.size());
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testIAEonNullSet() throws Exception {
+		LuaList t = new LuaList(b);
+		t.add(null);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testIOOBEonEmptyListGet() throws Exception {
+		LuaList t = new LuaList(b);
+		t.get(0);
+	}
+	
 	@Test
 	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
 		LuaList t = new LuaList(b);
@@ -69,17 +81,5 @@ public class LuaListTest {
 		assertEquals(3, counter);
 		assertEquals(2, t.size());
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	public void testIAEonNullSet() throws Exception {
-		LuaList t = new LuaList(b);
-		t.add(null);
-	}
-	
-	@Test(expected=IndexOutOfBoundsException.class)
-	public void testIOOBEonEmptyListGet() throws Exception {
-		LuaList t = new LuaList(b);
-		t.get(0);
-	}
-	
+
 }
