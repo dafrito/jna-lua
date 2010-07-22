@@ -1,8 +1,6 @@
 package com.dafrito.lua.script;
 
 import java.util.AbstractList;
-import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.RandomAccess;
 
 import lua.LuaLibrary;
@@ -113,43 +111,6 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 			lua.lua_rawseti(s, -2, i);
 		}
 		lua.lua_settop(s, -2);
-	}
-
-	public Iterator<Object> iterator() {
-		ref.get();
-		return new Iterator<Object>() {
-			private int i = 0;
-
-			@Override
-			public boolean hasNext() {
-				return size() > i;
-			}
-
-			@Override
-			public Object next() {
-				lua.lua_rawgeti(s, -1, ++i);
-				Object v = b.fromLua(-1);
-				lua.lua_settop(s, -2);
-				return v;
-			}
-
-			@Override
-			public void remove() {
-				LuaList.this.remove(--i);
-			}
-		};
-
-	}
-
-	@Override
-	public ListIterator<Object> listIterator() {
-		return listIterator(0);
-	}
-
-	@Override
-	public ListIterator<Object> listIterator(int index) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// TODO: This is more map-like than List-like. We should eventually move it.
