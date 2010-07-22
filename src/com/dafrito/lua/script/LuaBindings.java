@@ -16,7 +16,15 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	private final lua_State state;
 
 	private final LuaTranslator translator;
-
+	
+	public LuaBindings() {
+		this(lua.luaL_newstate(), new PrimitiveLuaTranslator());
+	}
+	
+	public LuaBindings(LuaLibrary.lua_State state) {
+		this(state, new PrimitiveLuaTranslator());
+	}
+	
 	public LuaBindings(LuaLibrary.lua_State state, LuaTranslator translator) {
 		this.state = state;
 		this.translator = translator;
@@ -43,9 +51,9 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 			return this.getSpecialProperty((String)key);
 		}
 		// TODO: This method pollutes the stack if it fails.
-		this.getTranslator().toLua(getState(), key);
+		this.getTranslator().toLua(this, key);
 		lua.lua_gettable(getState(), LuaLibrary.LUA_GLOBALSINDEX);
-		Object v = this.getTranslator().fromLua(getState(), lua.lua_gettop(getState()));
+		Object v = this.getTranslator().fromLua(this, lua.lua_gettop(getState()));
 		lua.lua_settop(getState(), -2);
 		return v;
 	}
@@ -64,8 +72,8 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 		}
 		Object old = this.get(name);
 		// TODO: This method pollutes the stack if it fails.
-		this.getTranslator().toLua(getState(), name);
-		this.getTranslator().toLua(getState(), value);
+		this.getTranslator().toLua(this, name);
+		this.getTranslator().toLua(this, value);
 		lua.lua_settable(getState(), LuaLibrary.LUA_GLOBALSINDEX);
 		return old;
 	}
@@ -132,11 +140,11 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	}
 
 	public Object fromLua(int idx) {
-		return translator.fromLua(state, idx);
+		return translator.fromLua(this, idx);
 	}
 
 	public void toLua(Object v) {
-		translator.toLua(state, v);		
+		translator.toLua(this, v);		
 	}
 
 }

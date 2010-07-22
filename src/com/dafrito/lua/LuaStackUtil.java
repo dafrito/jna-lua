@@ -9,58 +9,48 @@ import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
 import com.dafrito.lua.script.LuaBindings;
-import com.dafrito.lua.script.LuaTranslator;
 
 public class LuaStackUtil {
-	
-	private static final LuaLibrary lua = LuaLibrary.INSTANCE; 
-	
-	public static final LuaStackUtil INSTANCE=new LuaStackUtil();
-	
 	private LuaStackUtil() {
 	}
-	
+
+	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
+
+	public static final LuaStackUtil INSTANCE = new LuaStackUtil();
+
 	public boolean isEmpty(lua_State s) {
 		return lua.lua_gettop(s) == 0;
 	}
-	
+
 	public int size(lua_State s) {
 		return lua.lua_gettop(s);
 	}
-	
-	public Object get(lua_State s, LuaTranslator t, int idx) {
-		return t.fromLua(s, idx);
+
+	public Object get(LuaBindings b, int idx) {
+		return b.fromLua(idx);
 	}
-	
-	public List<Object> asList(lua_State s, LuaTranslator t) {
+
+	public List<Object> asList(LuaBindings b) {
 		List<Object> stack = new ArrayList<Object>();
-		for(int i=0; i < size(s); i++) {
-			stack.add(get(s, t, i+1));
+		for (int i = 0; i < size(b.getState()); i++) {
+			stack.add(b.get(i + 1));
 		}
 		return stack;
 	}
 
 	public void print(LuaBindings b) {
-		print(b.getState(), b.getTranslator(), System.out);
+		print(b, System.out);
 	}
 
 	public void print(LuaBindings b, OutputStream os) {
-		print(b.getState(), b.getTranslator(), os);
-	}
-
-	public void print(lua_State s, LuaTranslator t) {
-		print(s, t, System.out);
-	}
-	
-	public void print(lua_State s, LuaTranslator t, OutputStream os) {
-		if(!(os instanceof PrintStream)) {
+		if (!(os instanceof PrintStream)) {
 			os = new PrintStream(os);
 		}
-		PrintStream ps=(PrintStream)os;
-		List<Object> stack = asList(s, t);
+		PrintStream ps = (PrintStream) os;
+		List<Object> stack = asList(b);
 		ps.println("Stack (size:" + stack.size() + ")");
-		for(int i=0; i < stack.size(); i++) {
-			ps.println("[" + (i+1) + "] " + stack.get(i));
+		for (int i = 0; i < stack.size(); i++) {
+			ps.println("[" + (i + 1) + "] " + stack.get(i));
 		}
 	}
 }

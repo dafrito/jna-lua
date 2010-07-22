@@ -1,11 +1,10 @@
 package com.dafrito.lua.script;
 
-import lua.LuaLibrary;
 
 public interface LuaTranslator {
 
-	public void toLua(LuaLibrary.lua_State state, Object v);
+	public void toLua(LuaBindings b, Object v);
 
-	public Object fromLua(LuaLibrary.lua_State state, int idx);
+	public Object fromLua(LuaBindings b, int idx);
 
 }

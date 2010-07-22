@@ -39,14 +39,19 @@ public class LuaScriptEngine implements ScriptEngine {
 		if (!(context instanceof LuaScriptContext)) {
 			return this.eval(script, new LuaScriptContext(context));
 		}
-		LuaScriptContext lcontext = (LuaScriptContext) context;
-		lua_State s = lcontext.getState();
+		LuaBindings b = ((LuaScriptContext) context).getGlobals();
+		lua_State s = b.getState();
 		lua.luaL_loadstring(s, script);
-		lua.lua_call(s, 0, LuaLibrary.LUA_MULTRET);
+		Object args = this.get(ScriptEngine.ARGV);
+		if(args != null) {
+		}
+		if(lua.lua_pcall(s, 0, LuaLibrary.LUA_MULTRET, 0) != 0) {
+			throw new RuntimeException(b.fromLua(1).toString());
+		}
 		if(lua.lua_gettop(s) > 1) {
 			throw new UnsupportedOperationException("Multiple return values is not yet supported. Values returned: " + lua.lua_gettop(s));
 		}
-		Object v = this.context.getTranslator().fromLua(s, -1);
+		Object v = b.fromLua(-1);
 		lua.lua_settop(s, -2);
 		return v;
 	}
