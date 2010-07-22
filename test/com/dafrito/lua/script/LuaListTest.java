@@ -26,7 +26,7 @@ public class LuaListTest {
 	@Test
 	public void getAndSetAValueInATable() throws Exception {
 		LuaList t = new LuaList(b);
-		t.set(0, V);
+		t.add(V);
 		assertEquals(V, t.get(0));
 		assertEquals(1, t.size());
 	}
@@ -35,6 +35,7 @@ public class LuaListTest {
 	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
 		LuaList t = new LuaList(b);
 		t.add(V);
+		assertEquals(1 ,t.size());
 		t.remove(0);
 		assertTrue(t.isEmpty());
 	}
@@ -67,6 +68,18 @@ public class LuaListTest {
 		}
 		assertEquals(3, counter);
 		assertEquals(2, t.size());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testIAEonNullSet() throws Exception {
+		LuaList t = new LuaList(b);
+		t.add(null);
+	}
+	
+	@Test(expected=IndexOutOfBoundsException.class)
+	public void testIOOBEonEmptyListGet() throws Exception {
+		LuaList t = new LuaList(b);
+		t.get(0);
 	}
 	
 }

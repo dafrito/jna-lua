@@ -29,10 +29,11 @@ public class LuaList implements Iterable<Object> {
 	}
 
 	public Object remove(int i) {
-		i++;
+		check(i);
+		Object v = get(i);
 		ref.get();
 		int sz = size();
-		Object v = get(i);
+		i++; // Increment to get this value into lua-terms
 		for(; i < sz; i++) {
 			lua.lua_rawgeti(s, -2, i+1);
 			lua.lua_rawseti(s, -2, i);
@@ -44,6 +45,9 @@ public class LuaList implements Iterable<Object> {
 	}
 
 	public boolean add(Object v) {
+		if(v == null) {
+			throw new IllegalArgumentException("null elements are not allowed");
+		}
 		ref.get();
 		int sz = size();
 		this.b.toLua(v);
@@ -67,9 +71,16 @@ public class LuaList implements Iterable<Object> {
 		lua.lua_settop(s, -2);
 		return v;
 	}
+	
+	private void check(int idx) {
+		if(idx < 0 || idx >= size()) {
+			throw new IndexOutOfBoundsException("Index: " + idx + ", Size: " + size());
+		}
+	}
 
 	@Override
 	public Object get(int index) {
+		check(index);
 		ref.get();
 		lua.lua_rawgeti(s, -1, index + 1);
 		Object v = b.fromLua(-1);
@@ -79,6 +90,10 @@ public class LuaList implements Iterable<Object> {
 
 	@Override
 	public Object set(int index, Object element) {
+		check(index);
+		if(element == null) {
+			throw new IllegalArgumentException("null elements are not allowed");
+		}
 		ref.get();
 		lua.lua_rawgeti(s, -1, index + 1);
 		Object v = b.fromLua(-1);
