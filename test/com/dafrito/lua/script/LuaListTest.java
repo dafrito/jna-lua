@@ -31,6 +31,19 @@ public class LuaListTest {
 		assertEquals(1, t.size());
 	}
 	
+	@Test
+	public void insertingAnElementIntoTheMiddleOfAList() throws Exception {
+		LuaList t = new LuaList(b);
+		t.add("A");
+		t.add("C");
+		t.add(1, "B");
+		String s="";
+		for(Object v : t) {
+			s += v.toString();
+		}
+		assertEquals("ABC", s);
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void testIAEonNullSet() throws Exception {
 		LuaList t = new LuaList(b);

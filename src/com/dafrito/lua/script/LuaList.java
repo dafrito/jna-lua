@@ -38,9 +38,17 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	}
 
 	@Override
-	public void add(int index, Object element) {
-		// TODO Auto-generated method stub
-
+	public void add(int pos, Object element) {
+		check(pos);
+		ref.get();
+		pos++;
+		for (int i = size() + 1; i >= pos ; i--) {
+			lua.lua_rawgeti(s, -1, i);
+			lua.lua_rawseti(s, -2, i + 1);
+		}
+		b.toLua(element);
+		lua.lua_rawseti(s, -2, pos);
+		lua.lua_settop(s, -2);
 	}
 
 	@Override
