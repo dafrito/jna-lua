@@ -34,53 +34,27 @@ public class LuaScriptEngineTest {
 
 	@Test
 	public void testEval() throws Exception {
-		assertEquals(1.0, e.eval("return 1"));
-		assertEquals(2.0, e.eval("return 1+1"));
 		assertEquals(3.0, e.eval("a=2; return a+1"));
-	}
-	
-	@Test
-	public void testCreateBindings() throws Exception {
-		assertNotNull(e.createBindings());
 	}
 
 	@Test
 	public void testExplicitBindings() throws Exception {
 		Bindings bindings = e.createBindings();
 		assertNotNull(bindings);
-
 		bindings.put("t", "42");
 		assertEquals("42", bindings.get("t"));
 	}
 
 	@Test
-	public void testScriptEngineHasGlobalAndEngineBindings() throws Exception {
-		assertNotNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
+	public void scriptEngineHasGlobalAndEngineBindings() throws Exception {
 		assertNotNull(e.getBindings(ScriptContext.ENGINE_SCOPE));
-	}
-	
-	@Test
-	public void testEngineHasContext() throws Exception {
-		assertNotNull(e.getContext());
-		assertSame(e.getContext(), e.getContext());
-	}
-	
-	@Test
-	public void testEngineSharesBindingsOfItsDefaultContext() throws Exception {
+		assertNotNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
 		assertSame(e.getContext().getBindings(ScriptContext.ENGINE_SCOPE), e.getBindings(ScriptContext.ENGINE_SCOPE));
 		assertSame(e.getContext().getBindings(ScriptContext.GLOBAL_SCOPE), e.getBindings(ScriptContext.GLOBAL_SCOPE));
 	}
 
 	@Test
-	public void testBindingsCreation() throws Exception {
-		assertNotNull(e.createBindings());
-		assertNotNull(e.getBindings(ScriptContext.ENGINE_SCOPE));
-		assertNotNull(e.getBindings(ScriptContext.GLOBAL_SCOPE));
-	}
-	
-	@Test
 	public void testEngineBindingsCanBeChanged() throws Exception {
-		e.put("A", 1);
 		Bindings b = e.createBindings();
 		b.put("A", 2);
 		e.setBindings(b, ScriptContext.ENGINE_SCOPE);
@@ -88,13 +62,13 @@ public class LuaScriptEngineTest {
 	}
 	
 	@Test
-	public void testEngineBindingsAreDefaultBindings() throws Exception {
+	public void engineBindingsAreDefaultBindings() throws Exception {
 		e.put("a", true);
 		assertEquals(e.get("a"), e.getBindings(ScriptContext.ENGINE_SCOPE).get("a"));
 	}
 
 	@Test
-	public void testBindingsChangeScriptResults() throws Exception {
+	public void bindingsChangeScriptResults() throws Exception {
 		e.put("a", true);
 		assertEquals(true, e.get("a"));
 		assertEquals(true, e.eval("return a"));
