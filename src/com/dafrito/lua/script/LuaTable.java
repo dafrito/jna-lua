@@ -28,10 +28,11 @@ public class LuaTable implements Iterable<Object> {
 		return size() == 0;
 	}
 
-	public void remove(int i) {
+	public Object remove(int i) {
 		i++;
 		ref.get();
 		int sz = size();
+		Object v = get(i);
 		for(; i < sz; i++) {
 			lua.lua_rawgeti(s, -2, i+1);
 			lua.lua_rawseti(s, -2, i);
@@ -39,14 +40,16 @@ public class LuaTable implements Iterable<Object> {
 		lua.lua_pushnil(s);
 		lua.lua_rawseti(s, -2, i);
 		lua.lua_settop(s, -2);
+		return v;
 	}
 
-	public void add(Object v) {
+	public boolean add(Object v) {
 		ref.get();
 		int sz = size();
 		this.b.toLua(v);
 		lua.lua_rawseti(s, -2, sz+1);
 		lua.lua_settop(s, -2);
+		return true;
 	}
 
 	public int size() {
