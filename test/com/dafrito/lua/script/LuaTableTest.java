@@ -1,6 +1,7 @@
 package com.dafrito.lua.script;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
@@ -34,6 +35,7 @@ public class LuaTableTest {
 		LuaTable t = new LuaTable(new LuaReference(b));
 		t.add("No time");
 		t.remove(0);
+		assertTrue(t.isEmpty());
 	}
 	
 	@Before
@@ -53,6 +55,23 @@ public class LuaTableTest {
 			this.s = b.getState();
 		}
 
+		public boolean isEmpty() {
+			return size() == 0;
+		}
+
+		public void remove(int i) {
+			i++;
+			ref.get();
+			int sz = size();
+			for(; i < sz; i++) {
+				lua.lua_rawgeti(s, -2, i+1);
+				lua.lua_rawseti(s, -2, i);
+			}
+			lua.lua_pushnil(s);
+			lua.lua_rawseti(s, -2, i);
+			lua.lua_settop(s, -2);
+		}
+
 		public void add(Object v) {
 			ref.get();
 			int sz = size();
@@ -67,7 +86,7 @@ public class LuaTableTest {
 			lua.lua_settop(s, -2);
 			return sz;
 		}
-
+		
 		public Object get(Object k) {
 			ref.get();
 			b.toLua(k);
