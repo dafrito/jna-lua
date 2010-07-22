@@ -70,12 +70,6 @@ public class LuaList implements Iterable<Object> {
 		return v;
 	}
 	
-	private void check(int idx) {
-		if(idx < 0 || idx >= size()) {
-			throw new IndexOutOfBoundsException("Index: " + idx + ", Size: " + size());
-		}
-	}
-
 	@Override
 	public Object get(int index) {
 		check(index);
@@ -134,6 +128,12 @@ public class LuaList implements Iterable<Object> {
 			}
 		};
 		
+	}
+
+	private void check(int idx) {
+		if(idx < 0 || idx >= size()) {
+			throw new IndexOutOfBoundsException("Index: " + idx + ", Size: " + size());
+		}
 	}
 
 }
