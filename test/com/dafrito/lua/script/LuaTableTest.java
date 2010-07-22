@@ -1,5 +1,6 @@
 package com.dafrito.lua.script;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
@@ -20,6 +21,13 @@ public class LuaTableTest {
 		assertEquals("No time", t.get(1));
 	}
 	
+	@Test
+	public void sizeOfAnEmptyTableIsZero() throws Exception {
+		lua.lua_createtable(b.getState(), 0, 0);
+		LuaTable t = new LuaTable(new LuaReference(b));
+		assertEquals(0, t.size());
+	}
+	
 	@Before
 	public void setup() {
 		ctx = new LuaScriptContext();
@@ -35,6 +43,10 @@ public class LuaTableTest {
 			this.b = ref.getBindings();
 			this.ref = ref;
 			this.s = b.getState();
+		}
+
+		public int size() {
+			return 0;
 		}
 
 		public Object get(Object k) {
