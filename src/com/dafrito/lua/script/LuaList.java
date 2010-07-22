@@ -13,9 +13,7 @@ public class LuaList implements Iterable<Object> {
 	private final lua_State s;
 	
 	public LuaList(LuaBindings b) {
-		this.b=b;
-		this.s=b.getState();
-		this.ref = LuaReference.newTable(b);
+		this(LuaReference.newTable(b));
 	}
 
 	public LuaList(LuaReference ref) {
