@@ -26,8 +26,8 @@ public class LuaTableTest {
 	@Test
 	public void getAndSetAValueInATable() throws Exception {
 		LuaTable t = new LuaTable(b);
-		t.set(1, V);
-		assertEquals(V, t.get(1));
+		t.set(0, V);
+		assertEquals(V, t.get(0));
 		assertEquals(1, t.size());
 	}
 	

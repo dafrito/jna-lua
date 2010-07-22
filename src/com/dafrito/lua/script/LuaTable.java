@@ -68,6 +68,27 @@ public class LuaTable implements Iterable<Object> {
 		return v;
 	}
 
+	@Override
+	public Object get(int index) {
+		ref.get();
+		lua.lua_rawgeti(s, -1, index + 1);
+		Object v = b.fromLua(-1);
+		lua.lua_settop(s, -2);
+		return v;
+	}
+
+	@Override
+	public Object set(int index, Object element) {
+		ref.get();
+		lua.lua_rawgeti(s, -1, index + 1);
+		Object v = b.fromLua(-1);
+		lua.lua_settop(s, -2);
+		b.toLua(element);
+		lua.lua_rawseti(s, -2, index + 1);
+		lua.lua_settop(s, -2);
+		return v;
+	}
+
 	public void set(Object k, Object v) {
 		ref.get();
 		b.toLua(k);
