@@ -118,8 +118,7 @@ public class LuaScriptEngine implements ScriptEngine {
 	@Override
 	public void setContext(ScriptContext context) {
 		if (!(context instanceof LuaScriptContext)) {
-			// TODO: This is required by the specification, but it's not
-			// important yet.
+			// TODO: This is required by the specification, but it's not important yet.
 			throw new UnsupportedOperationException(
 					"Foreign ScriptContext objects are not yet supported");
 		}
