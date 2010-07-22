@@ -1,6 +1,5 @@
 package com.dafrito.lua.script;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
