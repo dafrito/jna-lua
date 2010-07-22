@@ -10,11 +10,11 @@ import lua.LuaLibrary.lua_State;
 
 public class LuaList extends AbstractList<Object> implements RandomAccess {
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
-	
+
 	private final LuaBindings b;
 	private final LuaReference ref;
 	private final lua_State s;
-	
+
 	public LuaList(LuaBindings b) {
 		this(LuaReference.newTable(b));
 	}
@@ -25,54 +25,24 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 		this.s = b.getState();
 	}
 
-	public boolean isEmpty() {
-		return size() == 0;
-	}
-
-	public Object remove(int i) {
-		check(i);
-		Object v = get(i);
-		ref.get();
-		int sz = size();
-		i++; // Increment to get this value into lua-terms
-		for(; i < sz; i++) {
-			lua.lua_rawgeti(s, -2, i+1);
-			lua.lua_rawseti(s, -2, i);
-		}
-		lua.lua_pushnil(s);
-		lua.lua_rawseti(s, -2, i);
-		lua.lua_settop(s, -2);
-		return v;
-	}
-
 	public boolean add(Object v) {
-		if(v == null) {
+		if (v == null) {
 			throw new IllegalArgumentException("null elements are not allowed");
 		}
 		ref.get();
 		int sz = size();
 		this.b.toLua(v);
-		lua.lua_rawseti(s, -2, sz+1);
+		lua.lua_rawseti(s, -2, sz + 1);
 		lua.lua_settop(s, -2);
 		return true;
 	}
 
-	public int size() {
-		ref.get();
-		int sz = lua.lua_objlen(s, -1).intValue();
-		lua.lua_settop(s, -2);
-		return sz;
+	@Override
+	public void add(int index, Object element) {
+		// TODO Auto-generated method stub
+
 	}
-	
-	public Object get(Object k) {
-		ref.get();
-		b.toLua(k);
-		lua.lua_gettable(s, -2);
-		Object v = b.fromLua(-1);
-		lua.lua_settop(s, -2);
-		return v;
-	}
-	
+
 	@Override
 	public Object get(int index) {
 		check(index);
@@ -86,7 +56,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	@Override
 	public Object set(int index, Object element) {
 		check(index);
-		if(element == null) {
+		if (element == null) {
 			throw new IllegalArgumentException("null elements are not allowed");
 		}
 		ref.get();
@@ -99,19 +69,38 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 		return v;
 	}
 
-	public void set(Object k, Object v) {
+	public int size() {
 		ref.get();
-		b.toLua(k);
-		b.toLua(v);
-		lua.lua_settable(s, -3);
+		int sz = lua.lua_objlen(s, -1).intValue();
 		lua.lua_settop(s, -2);
+		return sz;
+	}
+
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	public Object remove(int i) {
+		check(i);
+		Object v = get(i);
+		ref.get();
+		int sz = size();
+		i++; // Increment to get this value into lua-terms
+		for (; i < sz; i++) {
+			lua.lua_rawgeti(s, -2, i + 1);
+			lua.lua_rawseti(s, -2, i);
+		}
+		lua.lua_pushnil(s);
+		lua.lua_rawseti(s, -2, i);
+		lua.lua_settop(s, -2);
+		return v;
 	}
 
 	@Override
 	public void clear() {
 		ref.get();
 		int sz = size();
-		for(int i=0; i < sz; i++) {
+		for (int i = 0; i < sz; i++) {
 			lua.lua_pushnil(s);
 			lua.lua_rawseti(s, -2, i);
 		}
@@ -121,7 +110,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	public Iterator<Object> iterator() {
 		ref.get();
 		return new Iterator<Object>() {
-			private int i=0;
+			private int i = 0;
 
 			@Override
 			public boolean hasNext() {
@@ -141,11 +130,40 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 				LuaList.this.remove(--i);
 			}
 		};
-		
+
+	}
+
+	@Override
+	public ListIterator<Object> listIterator() {
+		return listIterator(0);
+	}
+
+	@Override
+	public ListIterator<Object> listIterator(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// TODO: This is more map-like than List-like. We should eventually move it.
+	public Object get(Object k) {
+		ref.get();
+		b.toLua(k);
+		lua.lua_gettable(s, -2);
+		Object v = b.fromLua(-1);
+		lua.lua_settop(s, -2);
+		return v;
+	}
+
+	public void set(Object k, Object v) {
+		ref.get();
+		b.toLua(k);
+		b.toLua(v);
+		lua.lua_settable(s, -3);
+		lua.lua_settop(s, -2);
 	}
 
 	private void check(int idx) {
-		if(idx < 0 || idx >= size()) {
+		if (idx < 0 || idx >= size()) {
 			throw new IndexOutOfBoundsException("Index: " + idx + ", Size: " + size());
 		}
 	}
