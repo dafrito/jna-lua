@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class LuaTableTest {
+	private static final String V = "No time";
 	LuaLibrary lua = LuaLibrary.INSTANCE;
 	private LuaBindings b;
 	private LuaScriptContext ctx;
@@ -19,21 +20,21 @@ public class LuaTableTest {
 	@Test
 	public void getAndPutAValueIntoATable() throws Exception {
 		LuaTable t = new LuaTable(b);
-		t.set(1, "No time");
-		assertEquals("No time", t.get(1));
+		t.set(1, V);
+		assertEquals(V, t.get(1));
 	}
 
 	@Test
 	public void sizeOfOneElementTableIsOne() throws Exception {
 		LuaTable t = new LuaTable(b);
-		t.add("No time");
+		t.add(V);
 		assertEquals(1, t.size());
 	}
 	
 	@Test
 	public void testRemovingAnElementMakesTheTableEmpty() throws Exception {
 		LuaTable t = new LuaTable(b);
-		t.add("No time");
+		t.add(V);
 		t.remove(0);
 		assertTrue(t.isEmpty());
 	}
@@ -47,11 +48,11 @@ public class LuaTableTest {
 	@Test
 	public void iterateOverAnOneElementTable() throws Exception {
 		LuaTable t = new LuaTable(b);
-		t.add("No time");
+		t.add(V);
 		t.add(42.0d);
 		Iterator<Object> i = t.iterator();
 		assertTrue(i.hasNext());
-		assertEquals("No time", i.next());	
+		assertEquals(V, i.next());	
 		assertEquals(42.0d, i.next());	
 		assertFalse(i.hasNext());
 	}
