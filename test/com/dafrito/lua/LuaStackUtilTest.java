@@ -9,6 +9,7 @@ import java.util.List;
 import lua.LuaLibrary;
 import lua.LuaLibrary.lua_State;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +40,7 @@ public class LuaStackUtilTest {
 	public void testGettingAnElement() throws Exception {
 		lua.lua_pushstring(s, "No time");
 		assertEquals("No time", u.get(b, 1));
+		lua.lua_settop(s, -2);
 	}
 	
 	@Test
@@ -47,6 +49,7 @@ public class LuaStackUtilTest {
 		List<Object> values = u.asList(b);
 		assertEquals(1, values.size());
 		assertEquals("No time", values.get(0));
+		lua.lua_settop(s, -2);
 	}
 	
 	@Test
@@ -54,12 +57,14 @@ public class LuaStackUtilTest {
 		lua.lua_pushstring(s, "No time");
 		assertEquals("No time", u.get(b, 1));
 		assertEquals("No time", u.get(b, 1));
+		lua.lua_settop(s, -2);
 	}
 	
 	@Test
 	public void testAsListReturnsEqualLists() throws Exception {
 		lua.lua_pushstring(s, "No time");
 		assertEquals(u.asList(b), u.asList(b));
+		lua.lua_settop(s, -2);
 	}
 	
 	@Test
@@ -71,5 +76,11 @@ public class LuaStackUtilTest {
 		ByteArrayOutputStream os2 = new ByteArrayOutputStream();
 		u.print(b, os2);
 		assertEquals(os.toString(), os2.toString());
+		lua.lua_settop(s, -2);
+	}
+	
+	@After
+	public void checkStack() {
+		assertEquals(0, lua.lua_gettop(b.getState()));
 	}
 }
