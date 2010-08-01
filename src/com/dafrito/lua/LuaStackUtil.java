@@ -33,7 +33,7 @@ public class LuaStackUtil {
 	public List<Object> asList(LuaBindings b) {
 		List<Object> stack = new ArrayList<Object>();
 		for (int i = 0; i < size(b.getState()); i++) {
-			stack.add(b.get(i + 1));
+			stack.add(get(b, i + 1));
 		}
 		return stack;
 	}
