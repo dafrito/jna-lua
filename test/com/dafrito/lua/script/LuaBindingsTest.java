@@ -23,5 +23,7 @@ public class LuaBindingsTest {
 		Bindings b = e.getBindings(ScriptContext.ENGINE_SCOPE);
 		b.put("A", true);
 		assertEquals(true, b.get("A"));
+		assertTrue(b.containsKey("A"));
 	}
+	
 }

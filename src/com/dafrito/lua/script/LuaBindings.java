@@ -38,8 +38,7 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 
 	@Override
 	public boolean containsKey(Object key) {
-		// TODO Auto-generated method stub
-		return false;
+		return get(key) != null;
 	}
 
 	@Override
