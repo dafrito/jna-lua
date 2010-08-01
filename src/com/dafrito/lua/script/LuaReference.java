@@ -19,7 +19,7 @@ public class LuaReference {
 	private final LuaBindings bindings;
 	private final int ref;
 
-	public LuaReference(LuaBindings b) {
+	private LuaReference(LuaBindings b) {
 		this.bindings = b;
 		this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
 		references.add(new LuaPhantomReference(this, queue));
@@ -57,6 +57,11 @@ public class LuaReference {
 	
 	public static LuaReference newTable(LuaBindings b) {
 		lua.lua_createtable(b.getState(), 0, 0);
+		return new LuaReference(b);
+	}
+	
+	public static LuaReference fromStack(LuaBindings b, int idx) {
+		lua.lua_pushvalue(b.getState(), idx);
 		return new LuaReference(b);
 	}
 
