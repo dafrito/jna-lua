@@ -1,6 +1,7 @@
 package com.dafrito.lua.script;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -25,5 +26,4 @@ public class LuaBindingsTest {
 		assertEquals(true, b.get("A"));
 		assertTrue(b.containsKey("A"));
 	}
-	
 }
