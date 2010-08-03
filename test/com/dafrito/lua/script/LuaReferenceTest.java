@@ -24,7 +24,7 @@ public class LuaReferenceTest {
 		ref.set("test");
 		assertEquals("test", ref.get());;
 	}
-
+	
 	@After
 	public void checkStack() {
 		assertEquals(0, lua.lua_gettop(b.getState()));
