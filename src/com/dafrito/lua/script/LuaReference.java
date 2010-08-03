@@ -25,10 +25,11 @@ public class LuaReference {
 		references.add(new LuaPhantomReference(this, queue));
 	}
 
-	public void get() {
+	public void stage() {
 		lua.lua_rawgeti(bindings.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
 	}
-
+	
+	
 	public LuaBindings getBindings() {
 		return bindings;
 	}

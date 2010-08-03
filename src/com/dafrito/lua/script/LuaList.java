@@ -27,7 +27,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 		if (v == null) {
 			throw new IllegalArgumentException("null elements are not allowed");
 		}
-		ref.get();
+		ref.stage();
 		int sz = size();
 		this.b.toLua(v);
 		lua.lua_rawseti(s, -2, sz + 1);
@@ -38,7 +38,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	@Override
 	public void add(int pos, Object element) {
 		check(pos);
-		ref.get();
+		ref.stage();
 		pos++;
 		for (int i = size() + 1; i >= pos ; i--) {
 			lua.lua_rawgeti(s, -1, i);
@@ -52,7 +52,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	@Override
 	public Object get(int index) {
 		check(index);
-		ref.get();
+		ref.stage();
 		lua.lua_rawgeti(s, -1, index + 1);
 		Object v = b.fromLua(-1);
 		lua.lua_settop(s, -2);
@@ -65,7 +65,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 		if (element == null) {
 			throw new IllegalArgumentException("null elements are not allowed");
 		}
-		ref.get();
+		ref.stage();
 		lua.lua_rawgeti(s, -1, index + 1);
 		Object v = b.fromLua(-1);
 		lua.lua_settop(s, -2);
@@ -76,7 +76,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	}
 
 	public int size() {
-		ref.get();
+		ref.stage();
 		int sz = lua.lua_objlen(s, -1).intValue();
 		lua.lua_settop(s, -2);
 		return sz;
@@ -89,7 +89,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	public Object remove(int i) {
 		check(i);
 		Object v = get(i);
-		ref.get();
+		ref.stage();
 		int sz = size();
 		i++; // Increment to get this value into lua-terms
 		for (; i < sz; i++) {
@@ -104,7 +104,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 
 	@Override
 	public void clear() {
-		ref.get();
+		ref.stage();
 		int sz = size();
 		for (int i = 0; i < sz; i++) {
 			lua.lua_pushnil(s);
@@ -115,7 +115,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 
 	// TODO: This is more map-like than List-like. We should eventually move it.
 	public Object get(Object k) {
-		ref.get();
+		ref.stage();
 		b.toLua(k);
 		lua.lua_gettable(s, -2);
 		Object v = b.fromLua(-1);
@@ -124,7 +124,7 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	}
 
 	public void set(Object k, Object v) {
-		ref.get();
+		ref.stage();
 		b.toLua(k);
 		b.toLua(v);
 		lua.lua_settable(s, -3);
