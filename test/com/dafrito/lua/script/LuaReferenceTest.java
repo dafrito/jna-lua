@@ -19,13 +19,12 @@ public class LuaReferenceTest {
 	}
 
 	@Test
-	public void getAndSetAGlobalWithAReference() throws Exception {
-		LuaReference ref = LuaReference.fromGlobal(b, "A");
+	public void getAndSetAReference() throws Exception {
+		Variable ref = new ReferenceVariable(b, false);
 		ref.set("test");
-		assertEquals("test", ref.get());
+		assertEquals("test", ref.get());;
 	}
 
-	
 	@After
 	public void checkStack() {
 		assertEquals(0, lua.lua_gettop(b.getState()));

@@ -10,14 +10,14 @@ public class LuaList extends AbstractList<Object> implements RandomAccess {
 	private static final LuaLibrary lua = LuaLibrary.INSTANCE;
 
 	private final LuaBindings b;
-	private final LuaReference ref;
+	private final Variable ref;
 	private final lua_State s;
 
 	public LuaList(LuaBindings b) {
-		this(LuaReference.newTable(b));
+		this(b.newTable());
 	}
 
-	public LuaList(LuaReference ref) {
+	public LuaList(Variable ref) {
 		this.b = ref.getBindings();
 		this.ref = ref;
 		this.s = b.getState();

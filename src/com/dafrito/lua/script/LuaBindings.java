@@ -145,5 +145,10 @@ public class LuaBindings extends AbstractMap<String, Object> implements Bindings
 	public void toLua(Object v) {
 		translator.toLua(this, v);		
 	}
+	
+	public Variable newTable() {
+		lua.lua_createtable(getState(), 0, 0);
+		return new ReferenceVariable(this, -1);
+	}
 
 }
