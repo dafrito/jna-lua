@@ -24,16 +24,27 @@ public class LuaReference {
 		this.ref = lua.luaL_ref(b.getState(), LuaLibrary.LUA_REGISTRYINDEX);
 		references.add(new LuaPhantomReference(this, queue));
 	}
-
-	public void stage() {
-		lua.lua_rawgeti(bindings.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
-	}
-	
 	
 	public LuaBindings getBindings() {
 		return bindings;
 	}
 	
+	public void stage() {
+		lua.lua_rawgeti(bindings.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
+	}
+
+	public Object get() {
+		stage();
+		Object v = bindings.fromLua(-1);
+		lua.lua_settop(bindings.getState(), -2);
+		return v;
+	}
+
+	public void set(Object v) {
+		bindings.toLua(v);
+		lua.lua_rawseti(bindings.getState(), LuaLibrary.LUA_REGISTRYINDEX, ref);
+	}
+
 	private static class LuaPhantomReference extends FinalizablePhantomReference<LuaReference> {
 
 		private final int ref;
@@ -64,6 +75,13 @@ public class LuaReference {
 	public static LuaReference fromStack(LuaBindings b, int idx) {
 		lua.lua_pushvalue(b.getState(), idx);
 		return new LuaReference(b);
+	}
+
+	public static LuaReference fromGlobal(LuaBindings b, String name) {
+		lua.lua_getfield(b.getState(), LuaLibrary.LUA_GLOBALSINDEX, name);
+		LuaReference ref = fromStack(b, -1);
+		lua.lua_settop(b.getState(), -2);
+		return ref;
 	}
 
 }
