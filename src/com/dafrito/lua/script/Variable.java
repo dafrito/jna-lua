@@ -1,6 +1,5 @@
 package com.dafrito.lua.script;
 
-import lua.LuaLibrary;
 
 public interface Variable {
 
